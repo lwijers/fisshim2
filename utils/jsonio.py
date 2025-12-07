@@ -24,3 +24,5 @@ def merge_with_defaults(data, defaults):
     out = defaults.copy()
     out.update(data or {})
     return out
+
+
