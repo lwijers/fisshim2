@@ -1,0 +1,20 @@
+{
+  "_comment": "Global aging + frailty tuning",
+  "egg_threshold_ratio": 0.02,
+  "juvenile_threshold_ratio": 0.15,
+  "elder_threshold_ratio": 0.80,
+  "egg_speed_multiplier": 0.0,
+  "juvenile_speed_multiplier_min": 0.85,
+  "elder_speed_multiplier_min": 0.70,
+  "elder_health_decay_at_max_per_sec": 0.04,
+  "_comment2": "At lifespan end: +4% of max health lost per second; scales from threshold→1",
+  "hard_death_at_lifespan": true,
+
+  "_comment_visual": "Render-time aging visuals (no new art needed)",
+  "juvenile_scale": 0.5,
+  "senior_desaturate": 0.6,
+  "senior_tint": [235, 225, 215],
+  "senior_outline": true,
+  "senior_outline_color": [40, 35, 30, 255],
+  "senior_outline_px": 1
+}

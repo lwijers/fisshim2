@@ -1,0 +1,9 @@
+{
+  "_comment": "All pellet-related params live here.",
+  "sprite": "pellet",
+  "width": 16,
+  "height": 16,
+  "radius_scale": 1.35,
+  "nutrition": 40.0,
+  "fall_speed": 60.0
+}

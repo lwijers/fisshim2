@@ -1,0 +1,13 @@
+{
+  "movement_damping": 0.995,
+  "wall_bounce": 0.30,
+  "typical_max_speed": 40.0,
+  "avoidance_margin": 20.0,
+  "avoidance_max_strength": 0.25,
+  "dead_sink_speed": 30.0,
+  "state_speed_smoothing": 0.10,
+  "idle_arrival_threshold": 6.0,
+  "idle_bob_x_factor": 1.0,
+  "idle_bob_y_factor": 0.8,
+  "food_fall_speed": 60.0
+}

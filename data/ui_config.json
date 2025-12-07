@@ -1,0 +1,21 @@
+{
+  "comment": "UI and rendering config. Comments live in 'comment*' keys.",
+  "render_cache_limit": 256,
+  "ui_font_size": 14,
+  "ui_bar_height": 4,
+  "ui_bar_gap": 6,
+  "ui_label_offset": 2,
+  "ui_target_line_width": 1,
+  "ui_velocity_arrow_scale": 0.5,
+  "ui_avoidance_arrow_scale": 40.0,
+  "ui_debug_border_width": 1,
+  "comment_ui": "Cache size for scaled sprites; font size; bar sizes/gaps; label offset; debug line widths and vector scales.",
+  "ui_tank_label_size": 32,
+  "ui_tank_label_color": [255, 255, 255],
+  "ui_tank_label_shadow": true,
+  "ui_tank_label_bottom_margin": 28,
+
+  "ui_toolbar_button_size": 48,
+  "ui_toolbar_margin_x": 12,
+  "ui_toolbar_margin_y": 12
+}

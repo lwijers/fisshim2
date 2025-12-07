@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "mate_radius": 120.0,
+  "pair_distance": 40.0,
+  "courtship_time_sec": 1.0,
+  "courtship_grace_sec": 0.3,
+  "cooldown_sec": 10.0,
+  "offspring_count_range": [1, 3],
+  "min_health_ratio": 0.6,
+  "min_hunger_ratio": 0.4,
+  "max_population": 60
+}

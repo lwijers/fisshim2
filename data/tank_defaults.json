@@ -1,0 +1,8 @@
+{
+  "logical_tank_width": 1200,
+  "logical_tank_height": 700,
+  "default_background": "tank_bg",
+  "min_wall_offset": 20,
+  "sand_top_ratio": 0.78,
+  "swim_bottom_margin": 80
+}

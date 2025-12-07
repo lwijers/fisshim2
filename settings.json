@@ -1,0 +1,29 @@
+{
+  "screen_width": 1600,
+  "screen_height": 900,
+  "fullscreen": false,
+  "audio": {
+    "enabled": true,
+    "master_volume": 0.8,
+    "num_channels": 8,
+    "sounds": {
+      "pellet_drop": [
+        "assets/audio/shake1.wav",
+        "assets/audio/shake2.wav",
+        "assets/audio/shake3.wav"
+      ],
+      "bite": [
+        "assets/audio/bite1.wav"
+      ],
+      "death": [
+        "assets/audio/death.wav"
+      ]
+    },
+    "volumes": {
+      "pellet_drop": 1.0,
+      "bite": 1.0,
+      "death": 0.70
+
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "goldfish": {
+    "sprite": "goldfish",
+    "width": 60,
+    "height": 40,
+    "max_age": 300,
+    "speed": 100.0,
+    "acceleration": 200.0,
+    "turn_speed": 8,
+    "behavior": {}
+  },
+
+  "betta": {
+    "sprite": "betta",
+    "width": 64,
+    "height": 40,
+    "max_age": 300,
+    "speed": 85.0,
+    "acceleration": 170.0,
+    "turn_speed": 10,
+    "behavior": {
+      "idle_bob_amplitude": 70.0
+    }
+  },
+
+  "corydoras": {
+    "sprite": "corydoras",
+    "width": 54,
+    "height": 28,
+    "max_age": 10,
+    "speed": 90.0,
+    "acceleration": 180.0,
+    "turn_speed": 9,
+    "behavior": {}
+  },
+
+  "guppy": {
+    "sprite": "guppy",
+    "width": 36,
+    "height": 20,
+    "max_age": 300,
+    "speed": 120.0,
+    "acceleration": 220.0,
+    "turn_speed": 12,
+    "behavior": {}
+  },
+
+  "neontetra": {
+    "sprite": "neontetra",
+    "width": 32,
+    "height": 18,
+    "max_age": 300,
+    "speed": 135.0,
+    "acceleration": 230.0,
+    "turn_speed": 14,
+    "behavior": {}
+  }
+}

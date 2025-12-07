@@ -1,0 +1,329 @@
+(A) BehaviorSystem builds FishObj every frame
+You construct:
+class FishObj:
+    pass
+fish = FishObj()
+fish.brain = brain
+...
+
+Why this is risky:
+
+
+Allocates a Python object for every fish every frame.
+
+
+Prevents type checking / IDE completion on Fish objects.
+
+
+Easily leads to bugs (e.g., misspelled attributes).
+
+
+Breaks cache locality and makes ECS less meaningful.
+
+
+Recommendation:
+Create a lightweight FishView dataclass or struct object that reuses instances:
+@dataclass(slots=True)
+class FishView:
+    brain: Brain
+    pos: Position
+    motion: MotionParams
+    hunger: Hunger
+    tuning: BehaviorTuning
+    intent: MotionIntent
+    sprite: Sprite
+    vel: Velocity
+
+Then either:
+
+
+Store one per entity, updated each frame, or
+
+
+Construct once per update loop.
+
+
+This prevents per-frame heap churn and makes the system tighter.
+
+(B) Too many responsibilities inside BehaviorSystem
+Right now BehaviorSystem does all of this:
+
+
+Hunger pre-check (jump to LookForFood)
+
+
+Enter/exit transitions
+
+
+State update delegation
+
+
+Dead state override
+
+
+Initialization logic
+
+
+This becomes a hidden “god system”.
+Suggestion:
+Split responsibilities:
+
+
+StateTransitionSystem — handles enter/exit and switching
+
+
+BehaviorSystem — ONLY calls current state's update
+
+
+HungerDecisionSystem — checks hunger → overrides
+
+
+This makes state logic predictable and easier to reason about.
+
+(C) MotionIntent = multipurpose bucket
+You use MotionIntent for:
+
+
+Desired speed
+
+
+Steering vector
+
+
+Target point
+
+
+Avoidance nudges
+
+
+Debug overlays reading from it
+
+
+That’s acceptable, but it creates tight coupling between multiple systems.
+Better pattern:
+Break intent into separate components:
+
+
+TargetIntent(tx, ty)
+
+
+SteeringIntent(dx, dy)
+
+
+SpeedIntent(v)
+
+
+MovementSystem can gather them:
+direction = normalized(target + steering)
+speed = clamp(speed_intent)
+
+This makes debugging easier and prevents a single struct from doing too much.
+
+(D) Rendering system is very large and monolithic
+RenderSystem currently handles:
+
+
+Facing direction
+
+
+Sprite scaling
+
+
+Label drawing
+
+
+Food overlays
+
+
+Velocity overlays
+
+
+Avoidance arrows
+
+
+Target lines
+
+
+It’s doing 5+ unrelated jobs.
+This makes it hard to maintain.
+The renderers folder helps, but RenderSystem is still a “traffic director”.
+Consider:
+Split rendering into:
+
+
+SpriteRenderSystem
+
+
+FishOverlaySystem
+
+
+DebugOverlaySystem (already separate)
+
+
+TankRenderSystem (already separate)
+
+
+This scales better and reduces accidental cross-effects.
+
+(E) MovementSystem does both movement AND collision
+MovementSystem:
+
+
+Computes desired velocity
+
+
+Applies turning constraints
+
+
+Applies acceleration clamp
+
+
+Handles damping
+
+
+Handles wall collision
+
+
+Handles bounce
+
+
+But AvoidanceSystem already exists.
+The overlap between “wall avoidance” and “wall bounce” creates unintuitive motion.
+Better separation long-term:
+
+
+AvoidanceSystem handles soft redirects
+
+
+CollisionSystem enforces hard boundaries
+
+
+MovementSystem only integrates velocity/position
+
+
+This gives you much cleaner movement tuning.
+
+(F) Hard-coded fish mouth logic
+Right now mouth detection is calculated both in:
+
+
+FSM (ChaseFood)
+
+
+Renderer (overlay_food)
+
+
+And using slightly different math.
+You partially solved this, but duplication is still dangerous.
+Create a unified helper:
+utils/geometry.py
+    get_mouth_logical(...)
+
+FSM and renderer should both call it.
+
+(G) World uses dictionaries inside dictionaries
+Your World class:
+self._components = { entity_id: { ComponentClass: component_instance } }
+
+This is fine, but queries like:
+world.entities_with(Position, MotionIntent, TankRef)
+
+iterate over ALL entities every frame.
+For 200+ fish, this begins to cost CPU.
+Later you will want:
+
+
+Bitmask signatures
+
+
+System-level “component subscription”
+
+
+Archetypes or chunked storage
+
+
+Not needed now, but this is your next scalability limit.
+
+🌊 3. Smaller Improvements
+✔ Motion noise in MovementSystem uses random every frame
+Consider using Perlin noise or a seeded jitter for more natural paths.
+✔ SpriteCache grayscale conversion O(n·pixels)
+You do:
+for x in range(w):
+  for y in range(h):
+     compute lum
+
+This is extremely slow if fish ever get larger.
+Better:
+
+
+Precompute grayscale once on load
+
+
+Save as a separate surface
+
+
+Use fast pixel manipulation (surfarray)
+
+
+
+✔ Pellet collision logic = duplicated in three places
+Needs consolidation into shared geometry helpers.
+
+✔ DeadState modifies Position directly
+This breaks system purity.
+Better to have:
+
+
+DeathSystem handling sinking motion
+
+
+DeadState marking death, no movement logic
+
+
+
+🌊 4. Overall Verdict
+Lennart — the architecture is surprisingly robust.
+Your simulation is already professional-level in:
+
+
+ECS separation
+
+
+FSM organization
+
+
+Rendering pipeline
+
+
+JSON tuning structure
+
+
+The biggest issues are:
+
+
+A few overgrown “god systems”
+
+
+MotionIntent doing too much
+
+
+Component queries being expensive
+
+
+Some duplicated geometry logic
+
+
+BehaviorSystem constructing temporary objects each frame
+
+
+These are solvable with incremental refactors.
+If you want, I can produce one or more of these next:
+✔ A proposed next evolution of your ECS
+✔ A refactored BehaviorSystem split into 3 cleaner systems
+✔ A movement pipeline diagram
+✔ A replacement for MotionIntent using 3 small components
+✔ A performance roadmap for scaling to 500+ fish
+✔ A critique specifically focused on AI / FSM quality
+✔ A plan to add schooling behavior (boids-like)
+Just tell me what direction you want to sharpen next.

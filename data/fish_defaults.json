@@ -1,0 +1,49 @@
+{
+  "_comment_stats": "Global default stats for all fish.",
+  "hunger_max": 100.0,
+  "health_max": 100.0,
+  "hunger_rate": 1.0,
+  "health_regen_factor": 0.10,
+  "_comment_health_regen_factor": "Percent of max health per second regained when well-fed.",
+  "health_starve_factor": 0.1,
+  "_comment_health_starve_factor": "Percent of max health per second lost when hunger is zero.",
+  "health_regen_threshold": 0.5,
+  "_comment_health_regen_threshold": "Hunger ratio above which health regenerates.",
+
+  "speed": 100.0,
+  "acceleration": 200.0,
+  "turn_speed": 8,
+  "dart_multiplier": 2.5,
+
+  "_comment_behavior": "FSM behavior defaults for all fish.",
+  "cruise_min_time": 6.0,
+  "cruise_max_time": 16.0,
+  "cruise_arrival_radius": 40.0,
+  "cruise_speed_factor": 0.6,
+  "transition_to_idle_chance": 0.01,
+
+  "idle_min_time": 3.0,
+  "idle_max_time": 12.0,
+  "idle_speed_factor": 0.05,
+  "idle_bob_amplitude": 100.0,
+  "idle_bob_frequency": 1.0,
+  "transition_to_cruise_chance": 0.02,
+
+  "_comment_food": "Food seeking/chasing parameters.",
+  "food_detect_radius": 250.0,
+  "food_seek_threshold": 0.80,
+  "look_for_food_speed_factor": 1.0,
+  "chase_food_speed_factor": 1.00,
+  "food_nutrition": 40.0,
+
+  "_comment_misc": "General noise and personalization",
+  "noise": 0.1,
+
+  "mouth_radius_factor": 0.40,
+  "eat_extra_margin": 8.0,
+
+  "_comment_pellet_debug": "Pellet collision tuning. Scale multiplies sprite half-size; offsets shift the perceived center (px).",
+  "pellet_radius_scale": 1.35,
+  "pellet_center_offset_x": 0.0,
+  "pellet_center_offset_y": 0.0
+}
